@@ -1,3 +1,8 @@
+This is a simple mode that switch the jade compiler by an html minifier.
+
+Here's the original readme:
+
+
 jade-angularjs-brunch [![Build Status](https://travis-ci.org/GulinSS/jade-angularjs-brunch.png?branch=master)](https://travis-ci.org/GulinSS/jade-angularjs-brunch)
 =====================
 
@@ -38,7 +43,7 @@ app/
     landing/
           index.jade
           ...
-                    
+
 ```
 
 The key note of example above is location of index.jade's. Them will be compile as usual jade files into index.html's. Your public folder will have such structure:
@@ -52,7 +57,7 @@ _public/
                 index.html
         landing/
                 index.html
-        
+
 ```
 
 And as addition it will group "partials" (files like page.jade in example) of this section into javascript files:
@@ -60,14 +65,14 @@ And as addition it will group "partials" (files like page.jade in example) of th
 ```
 _public/
         js/
-            app.templates.js        # it will contains compiled content of 
+            app.templates.js        # it will contains compiled content of
                                     # app/welcome/page.jade and any jades in subdirectories
-                                    
+
             app.access.templates.js # it will contains compiled content of
-                                    # app/access/register/page.jade and 
+                                    # app/access/register/page.jade and
                                     # app/access/login/page.jade
                                     # and any jades in subdirectories
-                                    
+
             app.admin.templates.js  # ...
             ...
 ```
@@ -85,7 +90,7 @@ Modules must be registered in application.coffee's files such as:
 ```
 App = angular.module('app', [
   ...
-  
+
   'app.templates'
 ])
 ```
@@ -99,13 +104,13 @@ After action above you can use your template in your code like this:
 
 or in directive's templateUrl.
 
-This magic helps you split your large application on small SPA sections for improving performance and control complexity. 
+This magic helps you split your large application on small SPA sections for improving performance and control complexity.
 
 ## Sample of settings (DEPRECATED)
 
 ### Add to dependencies section in package.json of your project:
 
-`` "jade-angularjs-brunch" : ">= 0.0.1 < 1.5" `` 
+`` "jade-angularjs-brunch" : ">= 0.0.1 < 1.5" ``
 
 ### Add to paths section in config.coffee:
 
@@ -116,7 +121,7 @@ jadeCompileTrigger: '.compile-jade'  # Defaults to 'js/dontUseMe'.
 ### Add to templates section in config.coffee:
 
 ```coffee
-joinTo: 
+joinTo:
   '.compile-jade': /^app/  # Hack for auto-compiling Jade templates.
 ```
 
