@@ -1,4 +1,4 @@
-jade = require 'jade'
+minify = require('html-minifier').minify
 sysPath = require 'path'
 mkdirp  = require 'mkdirp'
 fs = require 'fs'
@@ -12,21 +12,18 @@ fileWriter = (newFilePath) -> (err, content) ->
     throw err if err?
     fs.writeFile newFilePath, content, (err) -> throw err if err?
 
-module.exports = class JadeAngularJsCompiler
+module.exports = class HtmlAngularJsCompiler
   brunchPlugin: yes
   type: 'template'
-  extension: 'jade'
+  extension: 'html'
 
   # TODO: group parameters
   constructor: (config) ->
     @public = config.paths?.public or "_public"
-    @pretty = !!config.plugins?.jade?.pretty
-    @doctype = config.plugins?.jade?.doctype or "5"
-    @locals = config.plugins?.jade_angular?.locals or {}
-    @staticMask = config.plugins?.jade_angular?.static_mask or /index.jade/
+    @staticMask = config.plugins?.html_angular?.static_mask or /index.html/
     @compileTrigger = sysPath.normalize @public + sysPath.sep + (config.paths?.jadeCompileTrigger or 'js/dontUseMe')
-    @singleFile = !!config.plugins?.jade_angular?.single_file
-    @singleFileName = sysPath.join @public, (config?.plugins?.jade_angular?.single_file_name or "js/angular_templates.js")
+    @singleFile = !!config.plugins?.html_angular?.single_file
+    @singleFileName = sysPath.join @public, (config?.plugins?.html_angular?.single_file_name or "js/angular_templates.js")
 
   preparePairStatic: (pair) ->
     pair.path.push(pair.path.pop()[...-@extension.length] + 'html')
@@ -135,15 +132,10 @@ module.exports = class JadeAngularJsCompiler
 
     pathes.sourceFiles.map (e, i) =>
         data = fs.readFileSync e.path, 'utf8'
-        content = jade.compile data,
-          compileDebug: no,
-          client: no,
-          filename: e.path,
-          doctype: @doctype
-          pretty: @pretty
+        content = minify data
 
         path: e.path.split sysPath.sep
-        result: content @locals
+        result: content
 
   onCompile: (compiled) ->
     preResult = @prepareResult compiled

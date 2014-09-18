@@ -21,9 +21,10 @@
   },
   "dependencies": {
     "coffee-script": "1.3.3",
-    "jade": "~1.3.0",
-    "mkdirp": "*",
-    "lodash": "~0.9.0"
+    "html-minifier": "^0.6.8",
+    "html-minify": "^0.3.1",
+    "lodash": "~0.9.0",
+    "mkdirp": "*"
   },
   "devDependencies": {
     "mocha": "*",
